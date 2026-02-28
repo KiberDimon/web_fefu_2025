@@ -68,7 +68,36 @@ body {
     width: 300px;
 
 }
+.course-buttons {
+    display: flex;
+    justify-content: space-between;  /* «Подробнее» слева, «Записаться» справа */
+    align-items: center;
+    margin-top: 10px;
+}
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background-color: #3f51b5;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s, transform 0.1s;
+}
 
+.btn:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-1px);
+}
+
+/* второй вариант кнопки, можно чуть другой цвет */
+.btn-secondary {
+    background-color: #43a047;
+}
+
+.btn-secondary:hover {
+    background-color: #66bb6a;
+}
 .student-card__body .label {
     display: inline-block;
     width: 90px;
@@ -145,6 +174,7 @@ button[type="submit"]:hover {
 
 .mt-20 {
     margin-top: 20px;
+
 }
 
 /* Сетка для блоков статистики и новых курсов */
@@ -224,6 +254,7 @@ button[type="submit"]:hover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 16px;
+    margin-bottom: 20px;
 }
 
 .feature-card {

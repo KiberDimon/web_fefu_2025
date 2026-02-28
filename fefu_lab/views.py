@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from .forms import LoginForm
 from .forms import FeedbackForm
-from .models import Student, Instructor, Course, Enrollment
+from .models import Student, Instructor, Course
 from django.shortcuts import get_object_or_404
 from .forms import StudentRegistrationForm
+from .forms import EnrollmentForm
+from django.db import DatabaseError
 def home_page(request):
     total_students = Student.objects.filter(is_active=True).count()
     total_courses = Course.objects.filter(is_active=True).count()
@@ -107,4 +109,25 @@ def course_list(request):
     return render(request, 'fefu_lab/course_list.html', {
         'courses': courses,
         'title': 'Список курсов',
+    })
+
+def enrollment_view(request):
+    if request.method == 'POST':
+        form = EnrollmentForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+            except DatabaseError:
+                form.add_error(None, "Ошибка при сохранении записи в базу данных")
+            else:
+                return render(request, 'fefu_lab/success.html', {
+                    'title': 'Запись на курс',
+                    'message': 'Вы успешно записались на курс!'
+                })
+    else:
+        form = EnrollmentForm()
+
+    return render(request, 'fefu_lab/enrollment.html', {
+        'form': form,
+        'title': 'Запись на курс',
     })

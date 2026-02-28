@@ -20,10 +20,15 @@
                 <p><strong>Уровень:</strong> {{ course.get_level_display }}</p>
                 <p><strong>Длительность:</strong> {{ course.duration }} часов</p>
                 <p><strong>Цена:</strong> {{ course.price }} ₽</p>
-
-                <a href="{% url 'course_detail' course.slug %}" class="btn" style="margin-top: 10px;">
+                <div style="course-buttons">
+                    <a href="{% url 'course_detail' course.slug %}" class="btn" >
                     Подробнее
                 </a>
+                <a href="{% url 'enrollment' %}" class="btn" >
+                    Записаться на курс
+                </a>
+                </div>
+
             </div>
         {% endfor %}
     {% else %}
