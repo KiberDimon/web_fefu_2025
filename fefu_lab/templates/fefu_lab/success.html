@@ -1,0 +1,15 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block heading %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="student-card">
+        <p>{{ message }}</p>
+        <p style="margin-top: 15px;">
+            <a style="color:#3f51b5" href="/">Вернуться на главную</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
