@@ -1,0 +1,31 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Профиль студента{% endblock %}
+
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="student-card">
+
+        <div class="student-card__header">
+
+            <span class="student-card__status">{{ status }}</span>
+        </div>
+        <div class="student-card__body">
+            <p><span class="label">ID:</span> {{ student_id }}</p>
+            <p><span class="label">Имя:</span> {{ student_info }}</p>
+            <p><span class="label">Факультет:</span> {{ faculty }}</p>
+            <p><span class="label">Курс:</span> {{ year }}</p>
+        </div>
+    </div>
+
+    <div class="student-links">
+        <h3>Другие студенты:</h3>
+        <ul>
+            <li><a href="/student/1/">Иван Петров</a></li>
+            <li><a href="/student/2/">Мария Сидорова</a></li>
+            <li><a href="/student/3/">Алексей Козлов</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

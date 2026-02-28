@@ -1,17 +1,157 @@
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    margin: 20px;
+    color: #f5f5f5;
+    /* общий фон страницы */
+    background: radial-gradient(circle, #343454 0, #1a1a28 40%, #11111a 100%);
 }
-
 .navigation {
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;      /* выровнять по центру */
+    gap: 12px;                    /* расстояние между ссылками */
+    padding: 12px 20px;
+    background-color: #2d2d40;    /* фон под навбаром */
+    border-bottom: 2px solid #444;
+    border-radius: 10px;
 }
 
+/* ссылки как кнопки */
 .navigation a {
-    margin-right: 5px;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: #3f51b5;    /* цвет кнопки */
+    color: #ffffff;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
-.student-info {
-    border: 1px solid #ccc;
-    padding: 10px;
+/* hover/active эффекты */
+.navigation a:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-1px);
+}
+
+.navigation a:active {
+    background-color: #303f9f;
+    transform: translateY(0);
+}
+
+.student-card {
+    background: #2a2a3d;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid #3f3f55;
+    color: #f5f5f5;
+}
+
+.student-card__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.student-card__status {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #3f51b5;
+    color: #ffffff;
+}
+
+/* текст в карточке */
+.student-card__body p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.student-card__body .label {
+    display: inline-block;
+    width: 90px;
+    font-weight: 600;
+    color: #b0b0ff;
+}
+
+/* блок со ссылками на других студентов */
+.student-links {
+    margin-top: 24px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    background: #232338;
+}
+
+.student-links h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #b0b0ff;
+
+}
+
+.student-links ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.student-links a {
+    color: #90caf9;
+    text-decoration: none;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 30px auto;
+    background: #2a2a3d;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+.form-group .form-control {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e2f;
+    color: #f5f5f5;
+    resize: vertical;          /* можно менять только высоту */
+}
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 6px 0px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e2f;
+    color: #f5f5f5;
+}
+
+button[type="submit"] {
+    margin-top: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background-color: #3f51b5;
+    color: #fff;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #5c6bc0;
+}
+
+.error {
+    margin-top: 4px;
+    color: #ff8a80;
+    font-size: 13px;
 }
