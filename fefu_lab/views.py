@@ -1,88 +1,40 @@
-from django.http import  Http404
 from django.shortcuts import render
-from .forms import RegistrationForm, LoginForm
-from .models import UserProfile
+from .forms import LoginForm
 from .forms import FeedbackForm
-
-STUDENTS_DATA = {
-    1: {
-        'info': 'Иван Петров',
-        'faculty': 'Кибербезопасность',
-        'status': 'Активный',
-        'year': 3
-    },
-    2: {
-        'info': 'Мария Сидорова',
-        'faculty': 'Информатика',
-        'status': 'Активный',
-        'year': 2
-    },
-    3: {
-        'info': 'Алексей Козлов',
-        'faculty': 'Программная инженерия',
-        'status': 'Выпускник',
-        'year': 5
-    }
-}
-
-COURSES_DATA = {
-    'python-basics': {
-        'name': 'Основы программирования на Python',
-        'duration': 36,
-        'description': 'Базовый курс по программированию на языке Python для начинающих.',
-        'instructor': 'Доцент Петров И.С.',
-        'level': 'Начальный'
-    },
-    'web-security': {
-        'name': 'Веб-безопасность',
-        'duration': 48,
-        'description': 'Курс по защите веб-приложений от современных угроз.',
-        'instructor': 'Профессор Сидоров А.В.',
-        'level': 'Продвинутый'
-    },
-    'network-defense': {
-        'name': 'Защита сетей',
-        'duration': 42,
-        'description': 'Изучение методов и технологий защиты компьютерных сетей.',
-        'instructor': 'Доцент Козлова М.П.',
-        'level': 'Средний'
-    }
-}
+from .models import Student, Instructor, Course, Enrollment
+from django.shortcuts import get_object_or_404
+from .forms import StudentRegistrationForm
 def home_page(request):
-    return render(request, 'fefu_lab/homePage.html')
+    total_students = Student.objects.filter(is_active=True).count()
+    total_courses = Course.objects.filter(is_active=True).count()
+    total_instructors = Instructor.objects.filter(is_active=True).count()
+    recent_courses = Course.objects.filter(is_active=True).order_by('-created_at')[:3]
+
+    return render(request, 'fefu_lab/homePage.html', {
+        'title': 'Главная страница',
+        'total_students': total_students,
+        'total_courses': total_courses,
+        'total_instructors': total_instructors,
+        'recent_courses': recent_courses,
+    })
 
 def about_page(request):
     return render(request, 'fefu_lab/about.html')
 
-def student_profile(request, student_id):
-    if student_id in STUDENTS_DATA:
-        student_data = STUDENTS_DATA[student_id]
-        return render(request, 'fefu_lab/student_profile.html', {
-            'student_id': student_id,
-            'student_info': student_data['info'],
-            'faculty': student_data['faculty'],
-            'status': student_data['status'],
-            'year': student_data['year']
-        })
-    else:
-        raise Http404("Студент с таким ID не найден")
 
 
 def register_view(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = StudentRegistrationForm(request.POST)
         if form.is_valid():
-            UserProfile.objects.create(
-                username=form.cleaned_data['username'],
-                email=form.cleaned_data['email'],
-                password=form.cleaned_data['password']  # в учебных целях без хеша
-            )
+            # пароль уже в cleaned_data['password'], просто сохраняем студента
+            student = form.save()
             return render(request, 'fefu_lab/success.html', {
                 'title': 'Регистрация',
-                'message': 'Регистрация прошла успешно!'
+                'message': 'Регистрация прошла успешно! Студент добавлен в систему.'
             })
     else:
-        form = RegistrationForm()
+        form = StudentRegistrationForm()
 
     return render(request, 'fefu_lab/register.html', {
         'form': form,
@@ -93,17 +45,21 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            email = form.cleaned_data['email'].strip().lower()
             password = form.cleaned_data['password']
 
-            if UserProfile.objects.filter(username=username,
-                                          password=password).exists():
+            student = Student.objects.filter(email=email, password=password).first()
+
+            if student is not None:
+                # сохраняем id в сессии
+                request.session['student_id'] = student.pk
+
                 return render(request, 'fefu_lab/success.html', {
                     'title': 'Вход в систему',
-                    'message': 'Вход выполнен успешно! Добро пожаловать в систему.'
+                    'message': f'Вход выполнен успешно! Добро пожаловать, {student.full_name}.'
                 })
             else:
-                form.add_error(None, "Неверный логин или пароль")
+                form.add_error(None, "Неверный email или пароль")
     else:
         form = LoginForm()
 
@@ -126,4 +82,29 @@ def feedback_view(request):
     return render(request, 'fefu_lab/feedback.html', {
         'form': form,
         'title': 'Обратная связь'
+    })
+
+def student_detail(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    enrollments = student.enrollments.select_related('course')
+
+    return render(request, 'fefu_lab/student_detail.html', {
+        'student': student,
+        'enrollments': enrollments,
+    })
+
+def course_detail(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+    enrollments = course.enrollments.select_related('student')
+
+    return render(request, 'fefu_lab/course_detail.html', {
+        'course': course,
+        'enrollments': enrollments,
+    })
+
+def course_list(request):
+    courses = Course.objects.filter(is_active=True).order_by('title')
+    return render(request, 'fefu_lab/course_list.html', {
+        'courses': courses,
+        'title': 'Список курсов',
     })

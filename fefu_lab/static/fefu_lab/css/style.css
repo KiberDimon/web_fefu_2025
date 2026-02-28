@@ -12,7 +12,6 @@ body {
     padding: 12px 20px;
     background-color: #2d2d40;    /* фон под навбаром */
     border-bottom: 2px solid #444;
-    border-radius: 10px;
 }
 
 /* ссылки как кнопки */
@@ -66,6 +65,8 @@ body {
 .student-card__body p {
     margin: 6px 0;
     font-size: 15px;
+    width: 300px;
+
 }
 
 .student-card__body .label {
@@ -75,30 +76,6 @@ body {
     color: #b0b0ff;
 }
 
-/* блок со ссылками на других студентов */
-.student-links {
-    margin-top: 24px;
-    padding: 16px 20px;
-    border-radius: 10px;
-    background: #232338;
-}
-
-.student-links h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #b0b0ff;
-
-}
-
-.student-links ul {
-    margin: 0;
-    padding-left: 18px;
-}
-
-.student-links a {
-    color: #90caf9;
-    text-decoration: none;
-}
 
 .form-container {
     max-width: 400px;
@@ -155,3 +132,114 @@ button[type="submit"]:hover {
     color: #ff8a80;
     font-size: 13px;
 }
+
+/* Контейнеры и базовые отступы для главной */
+
+.text-center {
+    text-align: center;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+/* Сетка для блоков статистики и новых курсов */
+
+.info-grid {
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.info-item {
+    background: #2a2a3d;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid #3f3f55;
+}
+
+.info-item h3 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.info-item p {
+    margin: 4px 0;
+    text-align: center;
+    color: #d0d0f5;
+}
+
+/* Блок с быстрыми ссылками */
+
+.quick-links {
+    max-width: 1000px;
+    margin: 20px auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.quick-link {
+    display: block;
+    background: #232338;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: #f5f5f5;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    border: 1px solid #343454;
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s;
+}
+
+.quick-link h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+
+.quick-link p {
+    margin: 0;
+    color: #c0c0e5;
+    font-size: 14px;
+}
+
+.quick-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+    border-color: #3f51b5;
+}
+
+/* Блок с преимуществами внизу */
+
+.about-features {
+    max-width: 1000px;
+    margin: 20px auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.feature-card {
+    background: #232338;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid #343454;
+}
+
+.feature-card h3 {
+    margin: 0 0 6px;
+}
+
+.feature-card p {
+    margin: 0;
+    color: #c0c0e5;
+    font-size: 14px;
+}
+

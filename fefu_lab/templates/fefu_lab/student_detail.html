@@ -1,0 +1,28 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Студент {{ student.full_name }}{% endblock %}
+{% block heading %}Профиль студента{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="student-card">
+        <p><strong>ФИО:</strong> {{ student.full_name }}</p>
+        <p><strong>Email:</strong> {{ student.email }}</p>
+        <p><strong>Факультет:</strong> {{ student.get_faculty_display_name }}</p>
+        <p><strong>Дата рождения:</strong> {{ student.birth_date|default:"—" }}</p>
+    </div>
+
+    <div class="student-links">
+        <h3>Записан на курсы:</h3>
+        {% if enrollments %}
+            <ul>
+                {% for e in enrollments %}
+                    <li>{{ e.course.title }} ({{ e.get_status_display }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Студент пока не записан ни на один курс.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

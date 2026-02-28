@@ -1,7 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import UserProfile
-
+from .models import Student, Enrollment
+from datetime import datetime
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(
@@ -30,20 +31,25 @@ class RegistrationForm(forms.Form):
             raise ValidationError("Пользователь с таким логином уже существует")
         return username
 
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if UserProfile.objects.filter(email=email).exists():
+            raise ValidationError("Пользователь с таким email уже существует")
+        return email
+
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        password_confirm = cleaned_data.get('password_confirm')
-        if password and password_confirm and password != password_confirm:
+        pwd = cleaned_data.get('password')
+        pwd2 = cleaned_data.get('password_confirm')
+        if pwd and pwd2 and pwd != pwd2:
             raise ValidationError("Пароли не совпадают")
         return cleaned_data
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(
-        max_length=50,
-        label='Логин',
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+    email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
     )
     password = forms.CharField(
         label='Пароль',
@@ -81,3 +87,66 @@ class FeedbackForm(forms.Form):
         if len(text) < 10:
             raise ValidationError("Сообщение должно содержать минимум 10 символов")
         return text
+
+class StudentRegistrationForm(forms.ModelForm):
+    password = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+    password_confirm = forms.CharField(
+        label='Подтверждение пароля',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+    birth_date = forms.DateField(
+        required=False,
+        label='Дата рождения',
+        input_formats=['%d.%m.%Y', '%Y-%m-%d'],  # поддерживаем оба формата
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'дд.мм.гггг'
+        })
+    )
+
+    class Meta:
+        model = Student
+        fields = ('first_name', 'last_name', 'email', 'birth_date', 'faculty', 'password')
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if Student.objects.filter(email=email).exists():
+            raise ValidationError("Студент с таким email уже существует")
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pwd = cleaned_data.get('password')
+        pwd2 = cleaned_data.get('password_confirm')
+        if pwd and pwd2 and pwd != pwd2:
+            raise ValidationError("Пароли не совпадают")
+        return cleaned_data
+
+    def clean_birth_date(self):
+        value = self.cleaned_data.get('birth_date')
+
+        # если поле пустое — просто вернуть (оно у модели nullable)
+        if not value:
+            return value
+
+        # если уже пришёл date-объект (браузер дал yyyy-mm-dd) — тоже ок
+        if isinstance(value, datetime):
+            return value.date()
+
+        # если строка вида dd.mm.yyyy — разбираем вручную
+        if isinstance(value, str):
+            try:
+                return datetime.strptime(value.strip(), "%d.%m.%Y").date()
+            except ValueError:
+                raise ValidationError("Дата должна быть в формате ДД.ММ.ГГГГ")
+
+        return value
+
+
+class EnrollmentForm(forms.ModelForm):
+    class Meta:
+        model = Enrollment
+        fields = ('student', 'course')

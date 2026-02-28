@@ -1,0 +1,43 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Курс: {{ course.title }}{% endblock %}
+{% block heading %}Информация о курсе{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="student-card">
+        <div class="student-card__body">
+            <p><strong>Название:</strong> {{ course.title }}</p>
+            <p><strong>Преподаватель:</strong>
+                {% if course.instructor %}
+                    {{ course.instructor.full_name }}
+                {% else %}
+                    Не назначен
+                {% endif %}
+            </p>
+            <p><strong>Уровень:</strong> {{ course.get_level_display }}</p>
+            <p><strong>Длительность:</strong> {{ course.duration }} часов</p>
+            <p><strong>Цена:</strong> {{ course.price }} ₽</p>
+            <p><strong>Статус:</strong> {{ course.is_active|yesno:"Активен,Неактивен" }}</p>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <p><strong>Описание:</strong></p>
+            <p>{{ course.description }}</p>
+        </div>
+    </div>
+
+    <div class="student-links" style="margin-top: 24px;">
+        <h3>Записанные студенты:</h3>
+        {% if enrollments %}
+            <ul>
+                {% for e in enrollments %}
+                    <li>{{ e.student.full_name }} ({{ e.get_status_display }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>На этот курс пока никто не записан.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

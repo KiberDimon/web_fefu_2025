@@ -12,8 +12,10 @@
         <a href="/feedback/">Обратная связь</a>
         <a href="/register/">Регистрация</a>
         <a href="/login/">Вход</a>
-        <a href="/student/1/">Пример студента</a>
-        <a href="/course/python-basics/">Курс Python</a>
+        <a href="{% if request.session.student_id %}{% url 'student_detail' request.session.student_id %}{% else %}/login/{% endif %}">
+            Студент
+        </a>
+        <a href="/course/">Курсы</a>
     </div>
     <h1>{% block heading %}{% endblock %}</h1>
 
