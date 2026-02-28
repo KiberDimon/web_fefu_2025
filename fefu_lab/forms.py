@@ -1,50 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import UserProfile
 from .models import Student, Enrollment
 from datetime import datetime
-
-class RegistrationForm(forms.Form):
-    username = forms.CharField(
-        max_length=50,
-        label='Логин',
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
-    email = forms.EmailField(
-        label='Email',
-        widget=forms.EmailInput(attrs={'class': 'form-control'})
-    )
-    password = forms.CharField(
-        label='Пароль',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-    password_confirm = forms.CharField(
-        label='Подтверждение пароля',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-
-    def clean_username(self):
-        username = self.cleaned_data['username'].strip()
-        if len(username) < 2:
-            raise ValidationError("Логин должен содержать минимум 2 символа")
-        if UserProfile.objects.filter(username=username).exists():
-            raise ValidationError("Пользователь с таким логином уже существует")
-        return username
-
-    def clean_email(self):
-        email = self.cleaned_data['email'].strip().lower()
-        if UserProfile.objects.filter(email=email).exists():
-            raise ValidationError("Пользователь с таким email уже существует")
-        return email
-
-    def clean(self):
-        cleaned_data = super().clean()
-        pwd = cleaned_data.get('password')
-        pwd2 = cleaned_data.get('password_confirm')
-        if pwd and pwd2 and pwd != pwd2:
-            raise ValidationError("Пароли не совпадают")
-        return cleaned_data
-
 
 class LoginForm(forms.Form):
     email = forms.EmailField(

@@ -1,4 +1,3 @@
-from .models import UserProfile
 from django.contrib import admin
 from .models import Student, Instructor, Course, Enrollment
 
@@ -31,7 +30,3 @@ class EnrollmentAdmin(admin.ModelAdmin):
     list_filter = ['status', 'course']
     search_fields = ['student__first_name', 'student__last_name', 'course__title']
 
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email')
-    search_fields = ('username', 'email')
