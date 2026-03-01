@@ -26,7 +26,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.8']
+ALLOWED_HOSTS = ['127.0.0.1',
+    'localhost',
+    '192.168.0.8',]
 CSRF_TRUSTED_ORIGINS = ['http://192.168.0.8']
 
 # Application definition

@@ -1,0 +1,381 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #f5f5f5;
+    background: radial-gradient(circle, #343454 0, #1a1a28 40%, #11111a 100%);
+}
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background-color: #2d2d40;
+    border-bottom: 2px solid #444;
+}
+
+.navigation a {
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: #3f51b5;
+    color: #ffffff;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.navigation a:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-1px);
+}
+
+.navigation a:active {
+    background-color: #303f9f;
+    transform: translateY(0);
+}
+
+.student-card {
+    background: #2a2a3d;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid #3f3f55;
+    color: #f5f5f5;
+}
+
+.student-card__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.student-card__status {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #3f51b5;
+    color: #ffffff;
+}
+
+.student-card__body p {
+    margin: 6px 0;
+    font-size: 15px;
+    width: 300px;
+
+}
+.course-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background-color: #3f51b5;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #43a047;
+}
+
+.btn-secondary:hover {
+    background-color: #66bb6a;
+}
+.student-card__body .label {
+    display: inline-block;
+    width: 90px;
+    font-weight: 600;
+    color: #b0b0ff;
+}
+
+
+.form-container {
+    max-width: 400px;
+    margin: 30px auto;
+    background: #2a2a3d;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+.form-group .form-control {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e2f;
+    color: #f5f5f5;
+    resize: vertical;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 6px 0px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e2f;
+    color: #f5f5f5;
+}
+
+button[type="submit"] {
+    margin-top: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background-color: #3f51b5;
+    color: #fff;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #5c6bc0;
+}
+
+.error {
+    margin-top: 4px;
+    color: #ff8a80;
+    font-size: 13px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+
+}
+
+.info-grid {
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.info-item {
+    background: #2a2a3d;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid #3f3f55;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.info-item h3 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.info-item p {
+    margin: 4px 0;
+    text-align: center;
+    color: #d0d0f5;
+}
+
+.quick-links {
+    max-width: 1000px;
+    margin: 20px auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.info-item__footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-start; /* кнопка слева */
+}
+
+.quick-link {
+    display: block;
+    background: #232338;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: #f5f5f5;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    border: 1px solid #343454;
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s;
+}
+
+.quick-link h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+
+.quick-link p {
+    margin: 0;
+    color: #c0c0e5;
+    font-size: 14px;
+}
+
+.quick-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+    border-color: #3f51b5;
+}
+
+.about-features {
+    max-width: 1000px;
+    margin: 20px auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.feature-card {
+    background: #232338;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid #343454;
+}
+
+.feature-card h3 {
+    margin: 0 0 6px;
+}
+
+.feature-card p {
+    margin: 0;
+    color: #c0c0e5;
+    font-size: 14px;
+}
+
+/* Общий контейнер страницы */
+.page-wrapper {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+/* Карточка под тёмную тему */
+.card {
+    max-width: 600px;
+    margin: 0 auto 24px auto;
+    padding: 24px 28px;
+    background: #2a2a3d;                   /* как student-card */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid #3f3f55;
+    color: #f5f5f5;
+}
+
+/* Заголовки внутри карточек */
+.card h1,
+.card h2,
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+/* Формы в карточках под тёмную тему */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+/* поля формы */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e2f;
+    color: #f5f5f5;
+    resize: vertical;
+}
+
+/* Кнопки (общие) */
+button,
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background-color: #3f51b5;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover,
+.btn:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-1px);
+}
+
+/* Ошибки */
+.error {
+    margin-top: 4px;
+    color: #ff8a80;
+    font-size: 13px;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 16px auto;
+    max-width: 600px;
+}
+
+.message {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: #2a2a3d;
+    border: 1px solid #3f3f55;
+}
+
+.message.success {
+    border-color: #43a047;
+}
+
+.message.error {
+    border-color: #c53030;
+}
+
+.message.info {
+    border-color: #3f51b5;
+}
+
