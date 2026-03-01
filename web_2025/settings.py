@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'fefu_lab_db'),
         'USER': os.environ.get('DB_USER', 'fefu_user'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'СИЛЬНЫЙ_ПАРОЛЬ'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
