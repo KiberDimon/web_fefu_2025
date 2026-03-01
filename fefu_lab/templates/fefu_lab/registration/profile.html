@@ -1,0 +1,38 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Профиль{% endblock %}
+{% block heading %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Личный кабинет</h1>
+
+    <h2>{{ student.full_name }}</h2>
+    <p><strong>Email:</strong> {{ student.email }}</p>
+    <p><strong>Роль:</strong> {{ student.get_role_display }}</p>
+    <p><strong>Факультет:</strong> {{ student.get_faculty_display_name }}</p>
+    <p><strong>Телефон:</strong> {{ student.phone|default:"—" }}</p>
+    <p><strong>О себе:</strong> {{ student.bio|default:"—" }}</p>
+
+    {% if student.avatar %}
+        <p><img src="{{ student.avatar.url }}" alt="Аватар" style="max-width: 150px; border-radius: 50%;"></p>
+    {% endif %}
+
+    <p><a class="btn" href="{% url 'profile_edit' %}">Редактировать профиль</a></p>
+</div>
+
+{% if student.role == 'STUDENT' %}
+<div class="card">
+    <h2>Мои курсы</h2>
+    {% if enrollments %}
+        <ul>
+            {% for enrollment in enrollments %}
+                <li>{{ enrollment.course.title }} ({{ enrollment.get_status_display }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Вы ещё не записаны ни на один курс.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

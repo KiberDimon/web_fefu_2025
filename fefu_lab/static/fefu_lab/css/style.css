@@ -2,30 +2,27 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     color: #f5f5f5;
-    /* общий фон страницы */
     background: radial-gradient(circle, #343454 0, #1a1a28 40%, #11111a 100%);
 }
 .navigation {
     display: flex;
-    justify-content: center;      /* выровнять по центру */
-    gap: 12px;                    /* расстояние между ссылками */
+    justify-content: center;
+    gap: 12px;
     padding: 12px 20px;
-    background-color: #2d2d40;    /* фон под навбаром */
+    background-color: #2d2d40;
     border-bottom: 2px solid #444;
 }
 
-/* ссылки как кнопки */
 .navigation a {
     text-decoration: none;
     padding: 6px 12px;
     border-radius: 6px;
-    background-color: #3f51b5;    /* цвет кнопки */
+    background-color: #3f51b5;
     color: #ffffff;
     font-weight: 500;
     transition: background-color 0.2s, transform 0.1s;
 }
 
-/* hover/active эффекты */
 .navigation a:hover {
     background-color: #5c6bc0;
     transform: translateY(-1px);
@@ -61,7 +58,6 @@ body {
     color: #ffffff;
 }
 
-/* текст в карточке */
 .student-card__body p {
     margin: 6px 0;
     font-size: 15px;
@@ -70,7 +66,7 @@ body {
 }
 .course-buttons {
     display: flex;
-    justify-content: space-between;  /* «Подробнее» слева, «Записаться» справа */
+    justify-content: space-between;
     align-items: center;
     margin-top: 10px;
 }
@@ -90,7 +86,6 @@ body {
     transform: translateY(-1px);
 }
 
-/* второй вариант кнопки, можно чуть другой цвет */
 .btn-secondary {
     background-color: #43a047;
 }
@@ -126,7 +121,7 @@ body {
     border: 1px solid #555;
     background: #1e1e2f;
     color: #f5f5f5;
-    resize: vertical;          /* можно менять только высоту */
+    resize: vertical;
 }
 .form-group label {
     display: block;
@@ -162,8 +157,6 @@ button[type="submit"]:hover {
     font-size: 13px;
 }
 
-/* Контейнеры и базовые отступы для главной */
-
 .text-center {
     text-align: center;
 }
@@ -176,8 +169,6 @@ button[type="submit"]:hover {
     margin-top: 20px;
 
 }
-
-/* Сетка для блоков статистики и новых курсов */
 
 .info-grid {
     max-width: 1000px;
@@ -193,6 +184,9 @@ button[type="submit"]:hover {
     padding: 16px 18px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
     border: 1px solid #3f3f55;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .info-item h3 {
@@ -207,14 +201,18 @@ button[type="submit"]:hover {
     color: #d0d0f5;
 }
 
-/* Блок с быстрыми ссылками */
-
 .quick-links {
     max-width: 1000px;
     margin: 20px auto 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 16px;
+}
+
+.info-item__footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-start; /* кнопка слева */
 }
 
 .quick-link {
@@ -246,8 +244,6 @@ button[type="submit"]:hover {
     border-color: #3f51b5;
 }
 
-/* Блок с преимуществами внизу */
-
 .about-features {
     max-width: 1000px;
     margin: 20px auto 0 auto;
@@ -272,5 +268,114 @@ button[type="submit"]:hover {
     margin: 0;
     color: #c0c0e5;
     font-size: 14px;
+}
+
+/* Общий контейнер страницы */
+.page-wrapper {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+/* Карточка под тёмную тему */
+.card {
+    max-width: 600px;
+    margin: 0 auto 24px auto;
+    padding: 24px 28px;
+    background: #2a2a3d;                   /* как student-card */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid #3f3f55;
+    color: #f5f5f5;
+}
+
+/* Заголовки внутри карточек */
+.card h1,
+.card h2,
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+/* Формы в карточках под тёмную тему */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+/* поля формы */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e2f;
+    color: #f5f5f5;
+    resize: vertical;
+}
+
+/* Кнопки (общие) */
+button,
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background-color: #3f51b5;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover,
+.btn:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-1px);
+}
+
+/* Ошибки */
+.error {
+    margin-top: 4px;
+    color: #ff8a80;
+    font-size: 13px;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 16px auto;
+    max-width: 600px;
+}
+
+.message {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: #2a2a3d;
+    border: 1px solid #3f3f55;
+}
+
+.message.success {
+    border-color: #43a047;
+}
+
+.message.error {
+    border-color: #c53030;
+}
+
+.message.info {
+    border-color: #3f51b5;
 }
 

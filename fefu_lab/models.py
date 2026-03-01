@@ -1,7 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.urls import reverse
 
+
 class Instructor(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='instructor_profile',
+        verbose_name='Пользователь',
+        null=True,
+        blank=True,  # пока можно оставить, чтобы не ломать старые данные
+    )
     first_name = models.CharField(max_length=100, verbose_name='Имя')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия')
     email = models.EmailField(unique=True, verbose_name='Email')
@@ -23,6 +33,16 @@ class Instructor(models.Model):
 
 
 class Student(models.Model):
+    # связь с встроенным пользователем
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='student_profile',
+        verbose_name='Пользователь',
+        null=True,
+        blank=True       # на переходный период можно оставить blank, потом сделаем обязательным
+    )
+
     FACULTY_CHOICES = [
         ('CS', 'Кибербезопасность'),
         ('SE', 'Программная инженерия'),
@@ -31,20 +51,63 @@ class Student(models.Model):
         ('WEB', 'Веб-технологии'),
     ]
 
+    ROLE_CHOICES = [
+        ('STUDENT', 'Студент'),
+        ('TEACHER', 'Преподаватель'),
+        ('ADMIN', 'Администратор'),
+    ]
+
+    # старые поля (можем постепенно переносить в User, но пока оставим для совместимости)
     first_name = models.CharField(max_length=100, verbose_name='Имя')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия')
     email = models.EmailField(unique=True, verbose_name='Email')
-    birth_date = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
+
+    birth_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name='Дата рождения'
+    )
     faculty = models.CharField(
         max_length=3,
         choices=FACULTY_CHOICES,
         default='CS',
         verbose_name='Факультет'
     )
-    is_active = models.BooleanField(default=True, verbose_name='Активен')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-    password = models.CharField(max_length=128, verbose_name='Пароль', default='')
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Активен'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата создания'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Дата обновления'
+    )
+
+    # новые поля из ТЗ
+    avatar = models.ImageField(
+        upload_to='avatars/',
+        null=True,
+        blank=True,
+        verbose_name='Аватар'
+    )
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+        verbose_name='Телефон'
+    )
+    bio = models.TextField(
+        blank=True,
+        verbose_name='О себе'
+    )
+    role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+        default='STUDENT',
+        verbose_name='Роль'
+    )
 
     class Meta:
         verbose_name = 'Студент'
@@ -112,16 +175,38 @@ class Enrollment(models.Model):
         ('FINISHED', 'Завершен'),
     ]
 
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollments',
-                                verbose_name='Студент')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments',
-                               verbose_name='Курс')
+    GRADE_CHOICES = [
+        ('A', 'Отлично'),
+        ('B', 'Хорошо'),
+        ('C', 'Удовлетворительно'),
+        ('D', 'Неудовлетворительно'),
+    ]
+
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        related_name='enrollments',
+        verbose_name='Студент'
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name='enrollments',
+        verbose_name='Курс'
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата записи')
     status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
         default='ACTIVE',
         verbose_name='Статус'
+    )
+    grade = models.CharField(
+        max_length=1,
+        choices=GRADE_CHOICES,
+        blank=True,
+        null=True,
+        verbose_name='Оценка'
     )
 
     class Meta:
@@ -131,3 +216,4 @@ class Enrollment(models.Model):
 
     def __str__(self):
         return f"{self.student} → {self.course} ({self.status})"
+

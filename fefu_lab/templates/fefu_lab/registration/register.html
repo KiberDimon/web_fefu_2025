@@ -2,17 +2,20 @@
 
 {% block title %}Регистрация{% endblock %}
 
-
 {% block content %}
 <h1 style="display: flex;
     justify-content: center;">Регистрация</h1>
 <div class="form-container">
     <form method="post">
         {% csrf_token %}
+
         {% for field in form %}
             <div class="form-group">
                 {{ field.label_tag }}
                 {{ field }}
+                {% if field.help_text %}
+                    <small style="color: #aaa;">{{ field.help_text }}</small>
+                {% endif %}
                 {% if field.errors %}
                     <div class="error">
                         {% for error in field.errors %}

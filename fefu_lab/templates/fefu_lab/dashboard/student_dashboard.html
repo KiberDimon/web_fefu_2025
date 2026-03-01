@@ -1,0 +1,23 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Кабинет студента{% endblock %}
+{% block heading %}<h1 style="display: flex;
+    justify-content: center;">Кабинет студента</h1>{% endblock %}
+
+{% block content %}
+<div class="card">
+    <p>Здравствуйте, {{ student.full_name }}!</p>
+
+<h3>Ваши курсы</h3>
+{% if enrollments %}
+    <ul>
+        {% for enrollment in enrollments %}
+            <li>{{ enrollment.course.title }} ({{ enrollment.get_status_display }})</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Вы не записаны на курсы.</p>
+{% endif %}
+</div>
+
+{% endblock %}

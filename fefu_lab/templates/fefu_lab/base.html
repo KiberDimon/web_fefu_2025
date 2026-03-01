@@ -1,25 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+
+<html lang="ru">
 <head>
-    <title>Fefu_lab - {% block title %}{% endblock %}</title>
-    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Университет{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'fefu_lab/css/style.css' %}">
 </head>
 <body>
-    <div class="navigation">
+    <nav class="navigation">
         <a href="/">Главная</a>
         <a href="/about/">О нас</a>
-        <a href="/feedback/">Обратная связь</a>
-        <a href="/register/">Регистрация</a>
-        <a href="/login/">Вход</a>
-        <a href="{% if request.session.student_id %}{% url 'student_detail' request.session.student_id %}{% else %}/login/{% endif %}">
-            Студент
-        </a>
         <a href="/course/">Курсы</a>
-    </div>
-    <h1>{% block heading %}{% endblock %}</h1>
 
-    {% block content %}{% endblock %}
+        {% if user.is_authenticated %}
+            {% if user.student_profile.role == 'TEACHER' or user.student_profile.role == 'ADMIN' %}
+                <a href="{% url 'teacher_dashboard' %}">Дашборд</a>
+            {% else %}
+                <a href="{% url 'student_dashboard' %}">Дашборд</a>
+            {% endif %}
+            <a href="{% url 'profile' %}">Профиль ({{ user.first_name }})</a>
+            {% if user.is_staff %}
+                <a href="/admin/">Админка</a>
+            {% endif %}
+            <a href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+            <a href="{% url 'login' %}">Вход</a>
+            <a href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
+    </nav>
+    {% if messages %}
+    <div class="page-wrapper">
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+    <div class="page-wrapper">
+        {% block heading %}{% endblock %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>
-

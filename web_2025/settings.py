@@ -122,3 +122,18 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/profile.html/'
+LOGOUT_REDIRECT_URL = '/'
+
+SESSION_COOKIE_AGE = 1209600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
+AUTHENTICATION_BACKENDS = [
+    'fefu_lab.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]

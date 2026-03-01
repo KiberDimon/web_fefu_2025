@@ -1,0 +1,41 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Редактирование профиля{% endblock %}
+{% block heading %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Редактирование профиля</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <h3>Основные данные</h3>
+        {{ user_form.non_field_errors }}
+        {% for field in user_form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <h3>Профиль</h3>
+        {{ student_form.non_field_errors }}
+        {% for field in student_form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Сохранить</button>
+        <a href="{% url 'profile' %}" class="btn">Отмена</a>
+    </form>
+</div>
+{% endblock %}

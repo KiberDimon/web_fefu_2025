@@ -1,0 +1,60 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Студенты курса {{ course.title }}{% endblock %}
+{% block heading %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Студенты курса "{{ course.title }}"</h1>
+
+    {% if enrollments %}
+        <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Студент</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Email</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Статус</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Оценка</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enrollment in enrollments %}
+                    <tr>
+                        <td style="padding:8px;">{{ enrollment.student.full_name }}</td>
+                        <td style="padding:8px;">{{ enrollment.student.email }}</td>
+                        <td style="padding:8px;">{{ enrollment.get_status_display }}</td>
+                        <td style="padding:8px;">
+                            {% if enrollment.grade %}
+                                {{ enrollment.get_grade_display }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td style="padding:8px;">
+                            <form method="post" style="display:flex; gap:8px; align-items:center;">
+                                {% csrf_token %}
+                                <input type="hidden" name="enrollment_id" value="{{ enrollment.id }}">
+                                <select name="grade" class="form-control">
+                                    <option value="" {% if not enrollment.grade %}selected{% endif %}>—</option>
+                                    <option value="A" {% if enrollment.grade == 'A' %}selected{% endif %}>Отлично</option>
+                                    <option value="B" {% if enrollment.grade == 'B' %}selected{% endif %}>Хорошо</option>
+                                    <option value="C" {% if enrollment.grade == 'C' %}selected{% endif %}>Удовлетворительно</option>
+                                    <option value="D" {% if enrollment.grade == 'D' %}selected{% endif %}>Неудовлетворительно</option>
+                                </select>
+                                <button type="submit">Сохранить</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>На этот курс пока никто не записан.</p>
+    {% endif %}
+
+    <p style="margin-top:16px;">
+        <a class="btn" href="{% url 'teacher_dashboard' %}">Назад в кабинет</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "fefu_lab/base.html" %}
+
+{% block title %}Кабинет преподавателя{% endblock %}
+{% block heading %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Кабинет преподавателя</h1>
+    <p>Здравствуйте, {{ teacher.full_name }}!</p>
+</div>
+
+<div class="card">
+    <h2>Мои курсы</h2>
+
+    {% if courses %}
+        <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Курс</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Уровень</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;">Студентов</th>
+                    <th style="text-align:left; padding:8px; border-bottom:1px solid #3f3f55;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td style="padding:8px;">
+                            <a class="btn" href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+                        </td>
+                        <td style="padding:8px;">{{ course.get_level_display }}</td>
+                        <td style="padding:8px;">{{ course.students_count }}</td>
+                        <td style="padding:8px;">
+                            <a class="btn btn-secondary" href="{% url 'course_students' course.slug %}">
+                                Студенты
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У вас пока нет курсов.</p>
+    {% endif %}
+</div>
+{% endblock %}
