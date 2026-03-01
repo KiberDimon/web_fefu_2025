@@ -147,11 +147,9 @@ def profile_view(request):
 def student_dashboard(request):
     return render(request, 'fefu_lab/dashboard/student_dashboard.html')
 
-
 @login_required
 def teacher_dashboard(request):
     return render(request, 'fefu_lab/dashboard/teacher_dashboard.html')
-
 
 @login_required
 def logout_view(request):
@@ -163,7 +161,6 @@ def is_student(user):
 
 def is_teacher(user):
     return hasattr(user, 'student_profile') and user.student_profile.role in ['TEACHER', 'ADMIN']
-
 
 @login_required
 @user_passes_test(is_student)
