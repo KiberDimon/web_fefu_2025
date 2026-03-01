@@ -1,0 +1,33 @@
+[Unit]
+Description=web_2025 Django app
+After=network.target postgresql.service
+
+[Service]
+User=www-data
+Group=www-data
+
+# Корень проекта на Kali
+WorkingDirectory=/var/www/web_2025
+
+# Переменные окружения Django
+Environment="DJANGO_ENV=production"
+Environment="PATH=/var/www/web_2025/venv/bin"
+Environment="DJANGO_SECRET_KEY=СЮДА_СИЛЬНЫЙ_КЛЮЧ"
+Environment="DB_NAME=fefu_lab_db"
+Environment="DB_USER=fefu_user"
+Environment="DB_PASSWORD=СЮДА_ПАРОЛЬ_БД"
+Environment="DB_HOST=localhost"
+Environment="DB_PORT=5432"
+
+# Запуск gunicorn из venv, модуль wsgi = web_2025.wsgi
+ExecStart=/var/www/web_2025/venv/bin/gunicorn \
+  --bind 127.0.0.1:8000 \
+  --workers 3 \
+  web_2025.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

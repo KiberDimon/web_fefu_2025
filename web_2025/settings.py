@@ -11,22 +11,23 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^ci$0m3_5^1&!zrbok8_*p-kt4)13(3_9wjk*x=_vut@yd4jk8'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.8']
+CSRF_TRUSTED_ORIGINS = ['http://192.168.0.8']
 
 # Application definition
 
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'web_2025.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'fefu_lab_db'),
+        'USER': os.environ.get('DB_USER', 'fefu_user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -113,10 +118,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -132,6 +133,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key')
 
 AUTHENTICATION_BACKENDS = [
     'fefu_lab.backends.EmailBackend',
